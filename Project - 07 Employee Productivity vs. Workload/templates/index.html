@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project - 07: Employee Productivity vs. Workload | Microsoft Autonomous Operations AI</title>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <!-- Custom Stylesheet -->
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><rect x='1' y='1' width='10' height='10' fill='%23f25022'/><rect x='13' y='1' width='10' height='10' fill='%237fba00'/><rect x='1' y='13' width='10' height='10' fill='%2300a4ef'/><rect x='13' y='13' width='10' height='10' fill='%23ffb900'/></svg>">
+</head>
+<body>
+
+    <!-- Executive Glassmorphic Header -->
+    <header class="app-header">
+        <div class="brand-section">
+            <div class="ms-logo-grid">
+                <div class="ms-sq sq-red"></div>
+                <div class="ms-sq sq-green"></div>
+                <div class="ms-sq sq-blue"></div>
+                <div class="ms-sq sq-yellow"></div>
+            </div>
+            <div class="header-titles">
+                <h1>PROJECT - 07: Employee Productivity vs. Workload <span class="badge-tag">Microsoft AI Operations</span></h1>
+                <p>Empirical Telemetry Diagnostics, Overwork Paradox Modeling & Prescriptive Workload Interventions</p>
+            </div>
+        </div>
+        <div class="header-actions">
+            <div class="status-pill">
+                <span class="pulse-dot"></span>
+                <span>TELEMETRY ACTIVE: 12,500 ENGINEERS</span>
+            </div>
+            <a href="/api/download_report" class="btn-primary" target="_blank" download="Microsoft_Productivity_vs_Workload_Report.pdf">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="7 10 12 15 17 10"></polyline>
+                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                </svg>
+                Download Executive PDF Report
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Workspace Container -->
+    <main class="container">
+
+        <!-- Executive Alert Callout -->
+        <div class="alert-banner">
+            <div class="alert-content">
+                <div class="alert-icon">⚠️</div>
+                <div class="alert-text">
+                    <h4>EXECUTIVE OPERATIONAL ALERT: THE OVERWORK PARADOX CONFIRMED</h4>
+                    <p>Despite average working hours reaching 48.3 hrs/wk (+20.7% over contract), effective output has decayed by 34.6% due to cognitive exhaustion, 16.8 hrs/wk meeting load, and bug rework loops. Implementing prescriptive workload policies can recover <strong>$331.2 Million</strong> annually.</p>
+                </div>
+            </div>
+            <div style="font-size: 0.75rem; color: #cbd5e1; text-align: right;">
+                Inflection Point: <strong>42.0 hrs/wk</strong><br/>
+                Status: <span style="color: #f87171; font-weight: bold;">Critical Strain</span>
+            </div>
+        </div>
+
+        <!-- KPI Scorecard Grid -->
+        <section class="kpi-grid">
+            <div class="glass-panel kpi-card">
+                <div class="kpi-label">Monitored Headcount</div>
+                <div class="kpi-value" id="kpi-headcount">--</div>
+                <div class="kpi-subtext">Across 6 Business Units</div>
+            </div>
+            <div class="glass-panel kpi-card strain">
+                <div class="kpi-label">Avg Weekly Hours</div>
+                <div class="kpi-value" id="kpi-hours">-- <span class="kpi-unit">hrs</span></div>
+                <div class="kpi-subtext">+20.7% Above 40h Baseline</div>
+            </div>
+            <div class="glass-panel kpi-card strain">
+                <div class="kpi-label">Chronic Overtime Rate</div>
+                <div class="kpi-value" id="kpi-ot-pct">--</div>
+                <div class="kpi-subtext">Logging &gt;48 hrs/week</div>
+            </div>
+            <div class="glass-panel kpi-card warning">
+                <div class="kpi-label">Weekly Meeting Load</div>
+                <div class="kpi-value" id="kpi-meetings">-- <span class="kpi-unit">hrs</span></div>
+                <div class="kpi-subtext">Teams & Outlook Syncs</div>
+            </div>
+            <div class="glass-panel kpi-card warning">
+                <div class="kpi-label">Uninterrupted Focus</div>
+                <div class="kpi-value" id="kpi-focus">-- <span class="kpi-unit">hrs</span></div>
+                <div class="kpi-subtext">-50.6% vs 16h Benchmark</div>
+            </div>
+            <div class="glass-panel kpi-card strain">
+                <div class="kpi-label">Sprint Task Completion</div>
+                <div class="kpi-value" id="kpi-completion">--</div>
+                <div class="kpi-subtext">34.6% Sprint Spillover</div>
+            </div>
+            <div class="glass-panel kpi-card strain">
+                <div class="kpi-label">Bug Reopen Rate</div>
+                <div class="kpi-value" id="kpi-bugs">--</div>
+                <div class="kpi-subtext">Cognitive Regression Bugs</div>
+            </div>
+            <div class="glass-panel kpi-card cyan">
+                <div class="kpi-label">Effective Productivity (EPI)</div>
+                <div class="kpi-value" id="kpi-epi">-- <span class="kpi-unit">/100</span></div>
+                <div class="kpi-subtext">Net Value Delivered</div>
+            </div>
+            <div class="glass-panel kpi-card strain">
+                <div class="kpi-label">Est. Productivity Loss</div>
+                <div class="kpi-value" id="kpi-loss">--</div>
+                <div class="kpi-subtext">Annual Enterprise Drag</div>
+            </div>
+        </section>
+
+        <!-- Navigation Tabs Bar -->
+        <nav class="nav-tabs">
+            <button class="tab-btn active" data-tab="tab-overview">1. Executive Overview & Overwork Paradox</button>
+            <button class="tab-btn" data-tab="tab-bottlenecks">2. Operational Bottlenecks & ML Attribution</button>
+            <button class="tab-btn" data-tab="tab-simulator">3. Interactive Policy & Workload Simulator</button>
+            <button class="tab-btn" data-tab="tab-telemetry">4. Telemetry Explorer & Risk Profiler</button>
+            <button class="tab-btn" data-tab="tab-playbook">5. Prescriptive Intervention Playbook</button>
+        </nav>
+
+        <!-- ================================================================= -->
+        <!-- TAB 1: EXECUTIVE OVERVIEW & OVERWORK PARADOX                      -->
+        <!-- ================================================================= -->
+        <div id="tab-overview" class="tab-content active">
+            <div class="charts-grid">
+                <!-- Overwork Paradox Curve -->
+                <div class="glass-panel chart-box chart-card-full">
+                    <div class="chart-box-header">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00bcf2" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+                            The Overwork Paradox: Effective Productivity vs. Weekly Working Hours
+                        </h3>
+                        <span class="chart-legend-badge">Quadratic Fit Peak: 42.0 hrs/wk | Above 42h: Sharp Marginal Decline</span>
+                    </div>
+                    <div class="chart-container-rel" style="height: 330px;">
+                        <canvas id="chartParadox"></canvas>
+                    </div>
+                </div>
+
+                <!-- Divisional Bottlenecks Breakdown -->
+                <div class="glass-panel chart-box">
+                    <div class="chart-box-header">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+                            Bottleneck Distribution Across Microsoft Divisions (%)
+                        </h3>
+                        <span class="chart-legend-badge">Azure & AI Face Highest Crunch</span>
+                    </div>
+                    <div class="chart-container-rel">
+                        <canvas id="chartBottlenecks"></canvas>
+                    </div>
+                </div>
+
+                <!-- Cognitive Fatigue vs Absenteeism Drag -->
+                <div class="glass-panel chart-box">
+                    <div class="chart-box-header">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#d83b01" stroke-width="2"><path d="M18 20V10"/><path d="M12 20V4"/><path d="M6 20v-6"/></svg>
+                            Cognitive Fatigue vs. Unplanned Absenteeism & Glint Engagement
+                        </h3>
+                        <span class="chart-legend-badge">Burnout Escalation Cascade</span>
+                    </div>
+                    <div class="chart-container-rel">
+                        <canvas id="chartFatigue"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 2: OPERATIONAL BOTTLENECKS & ML ATTRIBUTION                   -->
+        <!-- ================================================================= -->
+        <div id="tab-bottlenecks" class="tab-content">
+            <h3 style="margin-bottom: 14px; font-size: 1.05rem;">Empirical Diagnostic Matrix: 6 Primary Operational Bottlenecks</h3>
+            <div id="bottlenecks-grid" class="bottlenecks-grid">
+                <!-- Dynamically populated via JS -->
+            </div>
+
+            <div class="charts-grid" style="margin-top: 24px;">
+                <!-- AI Feature Importance -->
+                <div class="glass-panel chart-box">
+                    <div class="chart-box-header">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#0078d4" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m4.93 4.93 4.24 4.24"/><path d="m14.83 9.17 4.24-4.24"/><path d="m14.83 14.83 4.24 4.24"/><path d="m9.17 14.83-4.24 4.24"/></svg>
+                            Gradient Boosting Machine Learning: Top Drivers of Productivity Decay
+                        </h3>
+                        <span class="chart-legend-badge">Tree Gini Importance (R² = 0.989)</span>
+                    </div>
+                    <div class="chart-container-rel">
+                        <canvas id="chartFeatures"></canvas>
+                    </div>
+                </div>
+
+                <!-- Divisional Telemetry Table -->
+                <div class="glass-panel chart-box">
+                    <div class="chart-box-header">
+                        <h3>
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#107c41" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><rect x="8" y="2" width="8" height="4" rx="1" ry="1"/></svg>
+                            Cross-Divisional Telemetry & Productivity Gap Summary
+                        </h3>
+                        <span class="chart-legend-badge">Microsoft Engineering Business Units</span>
+                    </div>
+                    <div class="table-responsive" style="max-height: 290px;">
+                        <table class="telemetry-table">
+                            <thead>
+                                <tr>
+                                    <th>Division</th>
+                                    <th>Headcount</th>
+                                    <th>Hours</th>
+                                    <th>Meetings</th>
+                                    <th>Focus</th>
+                                    <th>Compl. %</th>
+                                    <th>EPI</th>
+                                    <th>Loss</th>
+                                </tr>
+                            </thead>
+                            <tbody id="divisional-table-body">
+                                <!-- Populated dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 3: INTERACTIVE WORKLOAD POLICY SIMULATOR                      -->
+        <!-- ================================================================= -->
+        <div id="tab-simulator" class="tab-content">
+            <div class="simulator-layout">
+                <!-- Control Panel -->
+                <div class="glass-panel control-panel">
+                    <h3 style="font-size: 1.05rem; font-weight: 700; margin-bottom: 6px;">Workload Policy Controls</h3>
+                    <p style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 20px;">Adjust policy levers to simulate enterprise recovery across velocity, quality, and financial savings in real-time.</p>
+
+                    <!-- Slider 1 -->
+                    <div class="control-group">
+                        <div class="control-label-row">
+                            <span class="control-label">Meeting Load Reduction</span>
+                            <span class="control-val" id="val-sim-meeting">25%</span>
+                        </div>
+                        <input type="range" id="sim-meeting" min="0" max="50" step="5" value="25">
+                        <div style="font-size: 0.68rem; color: var(--text-dim); margin-top: 4px;">Enforces 25/50 min meetings & audit of syncs</div>
+                    </div>
+
+                    <!-- Slider 2 -->
+                    <div class="control-group">
+                        <div class="control-label-row">
+                            <span class="control-label">Max Weekly Overtime Cap</span>
+                            <span class="control-val" id="val-sim-overtime">45 hrs</span>
+                        </div>
+                        <input type="range" id="sim-overtime" min="40" max="60" step="1" value="45">
+                        <div style="font-size: 0.68rem; color: var(--text-dim); margin-top: 4px;">Overtime circuit breaker tripwire on Viva</div>
+                    </div>
+
+                    <!-- Slider 3 -->
+                    <div class="control-group">
+                        <div class="control-label-row">
+                            <span class="control-label">Focus Time Shields</span>
+                            <span class="control-val" id="val-sim-focus">1.5 days</span>
+                        </div>
+                        <input type="range" id="sim-focus" min="0" max="3" step="0.5" value="1.5">
+                        <div style="font-size: 0.68rem; color: var(--text-dim); margin-top: 4px;">'No-Meeting Wednesdays' & calendar shields</div>
+                    </div>
+
+                    <!-- Slider 4 -->
+                    <div class="control-group">
+                        <div class="control-label-row">
+                            <span class="control-label">Sprint Backlog Rebalancing</span>
+                            <span class="control-val" id="val-sim-rebalance">20%</span>
+                        </div>
+                        <input type="range" id="sim-rebalance" min="0" max="40" step="5" value="20">
+                        <div style="font-size: 0.68rem; color: var(--text-dim); margin-top: 4px;">De-scopes planned story points to realistic capacity</div>
+                    </div>
+
+                    <div style="background: rgba(0, 120, 212, 0.15); border: 1px solid rgba(0, 188, 242, 0.3); border-radius: var(--radius-sm); padding: 12px; margin-top: 15px;">
+                        <div style="font-size: 0.75rem; font-weight: 700; color: #38bdf8;">SIMULATOR POLICY PROFILE</div>
+                        <div style="font-size: 0.72rem; color: #cbd5e1; margin-top: 4px;">Calibrated against empirical telemetry and Gradient Boosting predictive regression across 12,500 Microsoft engineering personnel.</div>
+                    </div>
+                </div>
+
+                <!-- Simulation Output Dashboard -->
+                <div>
+                    <div class="sim-output-grid">
+                        <div class="sim-metric-card">
+                            <div class="sim-metric-title">Productivity Lift (EPI)</div>
+                            <div class="sim-metric-num" id="sim-out-lift">+19.4 pts</div>
+                            <div class="sim-metric-note">Projected net delivery speed</div>
+                        </div>
+                        <div class="sim-metric-card">
+                            <div class="sim-metric-title">Task Completion Boost</div>
+                            <div class="sim-metric-num" id="sim-out-completion">+17.2%</div>
+                            <div class="sim-metric-note">Eliminating sprint spillover</div>
+                        </div>
+                        <div class="sim-metric-card">
+                            <div class="sim-metric-title">Meeting Hours Reclaimed</div>
+                            <div class="sim-metric-num" id="sim-out-meetings">-4.2 hrs/wk</div>
+                            <div class="sim-metric-note">2.52M annual engineering hours</div>
+                        </div>
+                        <div class="sim-metric-card">
+                            <div class="sim-metric-title">Focus Time Gained</div>
+                            <div class="sim-metric-num" id="sim-out-focus">+4.8 hrs/wk</div>
+                            <div class="sim-metric-note">Uninterrupted deep coding</div>
+                        </div>
+                        <div class="sim-metric-card">
+                            <div class="sim-metric-title">Bug Reopen Reduction</div>
+                            <div class="sim-metric-num" id="sim-out-bugs">-9.6%</div>
+                            <div class="sim-metric-note">Lower cognitive fatigue</div>
+                        </div>
+                        <div class="sim-metric-card" style="border-color: rgba(16, 124, 65, 0.5); background: rgba(16, 124, 65, 0.1);">
+                            <div class="sim-metric-title" style="color: #4ade80;">Net Annual Cost Savings</div>
+                            <div class="sim-metric-num" id="sim-out-savings" style="color: #4ade80;">$331.2M</div>
+                            <div class="sim-metric-note">Value reclaimed across Microsoft</div>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Chart -->
+                    <div class="glass-panel chart-box">
+                        <div class="chart-box-header">
+                            <h3>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00bcf2" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+                                Policy Counterfactual: Status Quo Baseline vs. Simulated Workload Intervention
+                            </h3>
+                            <span class="chart-legend-badge">Real-Time Simulation Active</span>
+                        </div>
+                        <div class="chart-container-rel" style="height: 310px;">
+                            <canvas id="chartSimulation"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 4: TELEMETRY EXPLORER & RISK PROFILER                         -->
+        <!-- ================================================================= -->
+        <div id="tab-telemetry" class="tab-content">
+            <div class="filter-bar">
+                <input type="text" id="search-emp" class="search-input" placeholder="🔍 Search Employee ID or Role...">
+                <select id="filter-div" class="filter-select">
+                    <option value="">All Divisions</option>
+                </select>
+                <select id="filter-role" class="filter-select">
+                    <option value="">All Roles</option>
+                </select>
+                <select id="filter-bn" class="filter-select">
+                    <option value="">All Bottlenecks</option>
+                </select>
+            </div>
+
+            <div class="table-responsive">
+                <table class="telemetry-table">
+                    <thead>
+                        <tr>
+                            <th>Employee ID</th>
+                            <th>Division</th>
+                            <th>Role</th>
+                            <th>Hours/Wk</th>
+                            <th>Meetings</th>
+                            <th>Focus</th>
+                            <th>Task Compl.</th>
+                            <th>Bug Reopen</th>
+                            <th>Glint WLB</th>
+                            <th>EPI Score</th>
+                            <th>Primary Bottleneck</th>
+                            <th>Prescriptive Intervention</th>
+                        </tr>
+                    </thead>
+                    <tbody id="telemetry-tbody">
+                        <!-- Populated dynamically via JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 14px;">
+                <span id="page-info" style="font-size: 0.78rem; color: var(--text-muted);">Page 1</span>
+                <div style="display: flex; gap: 8px;">
+                    <button id="btn-prev" class="btn-primary" style="padding: 6px 12px; font-size: 0.75rem;">Previous</button>
+                    <button id="btn-next" class="btn-primary" style="padding: 6px 12px; font-size: 0.75rem;">Next</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ================================================================= -->
+        <!-- TAB 5: PRESCRIPTIVE INTERVENTION PLAYBOOK                         -->
+        <!-- ================================================================= -->
+        <div id="tab-playbook" class="tab-content">
+            <!-- Horizon 1 -->
+            <div class="playbook-tier">
+                <div class="tier-title">
+                    <span class="tier-badge h1">HORIZON 1: TACTICAL RELIEF</span>
+                    Immediate Executive Actions (0 - 30 Days)
+                </div>
+                <div id="playbook-h1" class="playbook-card-grid"></div>
+            </div>
+
+            <!-- Horizon 2 -->
+            <div class="playbook-tier">
+                <div class="tier-title">
+                    <span class="tier-badge h2">HORIZON 2: OPERATIONAL REBALANCING</span>
+                    Agile & Process Interventions (30 - 90 Days)
+                </div>
+                <div id="playbook-h2" class="playbook-card-grid"></div>
+            </div>
+
+            <!-- Horizon 3 -->
+            <div class="playbook-tier">
+                <div class="tier-title">
+                    <span class="tier-badge h3">HORIZON 3: SYSTEMIC GOVERNANCE</span>
+                    Cultural & AI Telemetry Architecture (90+ Days)
+                </div>
+                <div id="playbook-h3" class="playbook-card-grid"></div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+        <p>Microsoft Autonomous Operations AI | Project - 07: Employee Productivity vs. Workload &copy; 2026 Microsoft Corporation. Confidential - For Internal Executive Review Only.</p>
+    </footer>
+
+    <!-- Custom Controller Script -->
+    <script src="/static/js/dashboard.js"></script>
+</body>
+</html>
+
